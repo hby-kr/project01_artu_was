@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: artu_application_project01
+  profiles:
+    include: dev_db
+#    include: deploy
+
+
+# ?? ?? ??:
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace
