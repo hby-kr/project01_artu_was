@@ -16,6 +16,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "password_change_histories")
 public class PasswordChangeHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "change_id", nullable = false)
+    private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

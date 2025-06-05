@@ -5,19 +5,30 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.Instant;
 
 @Getter
 @Setter
 @Entity
+@ToString
+@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
+@Where(clause = "is_used = true")
 @Table(name = "posting_images")
 public class PostingImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "img_id", nullable = false)
-    private Integer id;
+    private Integer imgId;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Posting post;
 
     @NotNull
     @Column(name = "img_order", nullable = false)
@@ -35,6 +46,7 @@ public class PostingImage {
     @NotNull
     @ColumnDefault("1")
     @Column(name = "is_used", nullable = false)
-    private Boolean isUsed = false;
+    private Boolean isUsed;
+
 
 }
