@@ -1,6 +1,5 @@
-package com.artu.entity.users.activity;
+package com.artu.entity.oneday;
 
-import com.artu.entity.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,8 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import java.time.Instant;
 
@@ -17,25 +14,30 @@ import java.time.Instant;
 @Setter
 @Entity
 @ToString
-@Table(name = "user_img")
-public class UserImg {
+@Table(name = "oneday_options")
+public class OnedayOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prf_img_id", nullable = false)
-    private Integer prfImgId;
-
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "prf_img_url", nullable = false)
-    private String prfImgUrl;
+    @Column(name = "opt_id", nullable = false)
+    private Integer optId;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "date_id", nullable = false)
+    private OnedayDate onedayDate;
 
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "opt_name", nullable = false, length = 100)
+    private String optName;
+
+    @NotNull
+    @Column(name = "opt_price", nullable = false)
+    private Integer optPrice;
+
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @NotNull

@@ -13,10 +13,11 @@ import org.hibernate.annotations.Where;
 @Setter
 @Entity
 @ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "post_tag_links")
 public class PostTagLink {
+
+    public enum TagType {oneday, events, location}
+
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
@@ -25,7 +26,7 @@ public class PostTagLink {
     @NotNull
     @Lob
     @Column(name = "tag_type", nullable = false)
-    private String tagType;
+    private TagType tagType;
 
     @Column(name = "selected_id")
     private Integer selectedId;

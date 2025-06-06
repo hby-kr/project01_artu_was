@@ -4,6 +4,8 @@ import com.artu.entity.users.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.time.Instant;
+
 public class UserDto {
 
     @Getter
@@ -40,5 +42,41 @@ public class UserDto {
         private String email;
         private String nickname;
         // 필요한거 더 넣기로.
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserFollowDto {
+        private Integer followerId;
+        private Integer followeeId;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserInquireDto {
+        private Integer userNo;
+        private String inquireCategory;
+        private String title;
+        private String contents;
+        private Integer paymentId;
+        private String inquiryImgUrl;
+        private String inquiryState;
+        private Boolean isUsed;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserSettingDto {
+        private Integer userNo;
+        private String displayColor;
+        private String language;
+        private Instant setAt;
+        private Boolean isUsed;
     }
 }

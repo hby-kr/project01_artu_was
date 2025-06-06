@@ -1,11 +1,11 @@
-package com.artu.entity.users.activity;
+package com.artu.entity.oneday;
 
-import com.artu.entity.oneday.OnedayClass;
-import com.artu.entity.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -13,20 +13,27 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_oneday_bmarks")
-public class UserOnedayBmark {
-    @EmbeddedId
-    private UserOnedayBmarkId id;
+@ToString
+@Table(name = "oneday_detail_images")
+public class OnedayDetailImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "detail_img_id", nullable = false)
+    private Integer detailImgId;
 
-    @MapsId("userNo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
-
-    @MapsId("onedayId")
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "oneday_id", nullable = false)
     private OnedayClass oneday;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
+
+    @NotNull
+    @Column(name = "img_order", nullable = false)
+    private Integer imgOrder;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")

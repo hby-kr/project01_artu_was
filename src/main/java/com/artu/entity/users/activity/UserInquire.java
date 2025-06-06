@@ -17,10 +17,13 @@ import java.time.Instant;
 @Setter
 @Entity
 @ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "user_inquires")
 public class UserInquire {
+
+    public enum InquireCategory {account, payment, event, oneday, etc}
+
+    public enum InquiryState {pending, completed}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inquire_id", nullable = false)
@@ -34,7 +37,8 @@ public class UserInquire {
     @ColumnDefault("'etc'")
     @Lob
     @Column(name = "inquire_category")
-    private String inquireCategory;
+    @Enumerated(EnumType.STRING)
+    private InquireCategory inquireCategory;
 
     @Size(max = 255)
     @NotNull
@@ -62,7 +66,8 @@ public class UserInquire {
     @ColumnDefault("'pending'")
     @Lob
     @Column(name = "inquiry_state")
-    private String inquiryState;
+    @Enumerated(EnumType.STRING)
+    private InquiryState inquiryState;
 
     @Column(name = "state_updated_at")
     private Instant stateUpdatedAt;
