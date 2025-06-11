@@ -16,5 +16,5 @@ public interface OnedayReviewImageRepository extends JpaRepository<OnedayReviewI
     List<OnedayReviewImage> findAll();
 
     // 리뷰별 이미지 조회
-    List<OnedayReviewImage> findOnedayReview_reviewId(Integer reviewId);
+    List<OnedayReviewImage> findByOnedayReview_reviewId(Integer reviewId);
 }

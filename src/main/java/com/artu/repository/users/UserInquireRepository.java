@@ -16,5 +16,5 @@ public interface UserInquireRepository extends JpaRepository<UserInquire, Intege
     Optional<UserInquire> findOneByUser_UserNo(Integer userNo);
 
     // 카테고리별
-    Set<UserInquire> findByInquireCategory(String inquireCategory);
+    Set<UserInquire> findByInquireCategory(UserInquire.InquireCategory inquireCategory);
 }
