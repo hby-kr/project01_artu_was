@@ -19,6 +19,15 @@ import java.time.Instant;
 @Table(name = "users")
 public class User {
 
+
+    public enum UserRole {
+        USER, ADMIN, MANAGER // 대문자 상수
+    }
+
+    public enum OAuthProvider {
+        GOOGLE, KAKAO, NAVER, GITHUB // 대문자 상수
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_no", nullable = false)
@@ -35,11 +44,13 @@ public class User {
     private String password;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role;
+    private UserRole role;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "oauth")
-    private String oauth;
+    private OAuthProvider oauth;
 
     @NotNull
     @ColumnDefault("1")

@@ -10,7 +10,6 @@ public class EventDto {
     @Setter
     @ToString
     public static class eventMainPageDto {
-
         private int eventId;
         private String title;
         private String eventImageUrl;

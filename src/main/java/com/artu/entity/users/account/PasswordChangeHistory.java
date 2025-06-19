@@ -4,7 +4,6 @@ import com.artu.entity.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -22,9 +21,8 @@ public class PasswordChangeHistory {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User userNo;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @Size(max = 255)
     @NotNull

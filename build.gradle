@@ -29,11 +29,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final' // MapStruct 핵심 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    testImplementation 'org.springframework.security:spring-security-test'
+    compileOnly 'org.projectlombok:lombok' // Lombok은 Getter/Setter를 자동으로 만들어줘서 DTO/Entity 작성을 편하게 합니다.
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'// MapStruct가 코드를 생성할 때 필요한 어노테이션 프로세서
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'  // Lombok과 MapStruct의 충돌을 방지하는 플러그인
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

@@ -16,11 +16,6 @@ public class UserStat {
     @Column(name = "user_no", nullable = false)
     private Integer userNo;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User users;
-
     @ColumnDefault("0")
     @Column(name = "following_count")
     private Integer followingCount;

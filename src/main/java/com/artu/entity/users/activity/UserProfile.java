@@ -15,14 +15,16 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "user_profiles")
 public class UserProfile {
+
+    public enum Gender {M, F}
+
     @Id
     @Column(name = "user_no", nullable = false)
     private Integer userNo;
 
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User users;
+    @Size(max = 50)
+    @Column(name = "nickname", length = 50)
+    private String nickname;
 
     @Size(max = 100)
     @NotNull
@@ -52,5 +54,6 @@ public class UserProfile {
     @ColumnDefault("1")
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed = false;
+
 
 }
