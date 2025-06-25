@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -55,14 +56,14 @@ public class User {
     @NotNull
     @ColumnDefault("1")
     @Column(name = "is_used", nullable = false)
-    private Boolean isUsed = false;
+    private Boolean isUsed;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "dropout_at")
-    private Instant dropoutAt;
+    private LocalDateTime dropoutAt;
 
     @Column(name = "memo")
     private String memo;

@@ -34,16 +34,23 @@ public interface UserAccountService {
     // 사용자 로그인 요청을 처리합니다.
     Optional<User> login(UserDto.LoginRequestDto requestDto);
 
+/* 아이디와 비번 찾을 때,
+    1) 이메일의 일부를 보여주고 일부를 요청자에게 확인해야하며,
+    2) 이름과 이메일이 모두 일치하면,
+    3) 그 이메일로 메일을 보내서 아이디를 알려주거나
+    3-1) 비밀번호를 재설정 할 수 있는 url을 보내줄 예정.  */
 
-    // 아이디,비번 찾기
     // 이메일을 통해 사용자 ID를 찾습니다.
-    Optional<UserDto.UserIdFindResponseDto> readUserIdByEmail(UserDto.UserIdFindRequestDto requestDto);
+    Optional<UserDto.UserIdFindResponseDto> readUserIdByNameAndEmail(UserDto.UserIdFindRequestDto requestDto);
+
     // (비번 모르는 사람이 본인 인증 후) 비밀번호 재설정을 요청합니다.
     void requestPasswordReset(UserDto.PasswordResetRequestDto requestDto);
 
-
     // 마이페이지 내에서 사용자의 비밀번호를 변경합니다.
     void changePassword(String userId, UserDto.PasswordChangeRequestDto requestDto);
+
+    // 마이페이지 내 정보보기
+    Optional<UserDto.UserProfileResponseDto> getUserAccountProfile(String userId);
 
     // 회원 탈퇴
     // 사용자 계정을 탈퇴(비활성화 또는 논리적 삭제) 처리합니다.

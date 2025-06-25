@@ -3,14 +3,12 @@ package com.artu.service.users;
 import com.artu.dto.UserDto;
 import com.artu.entity.users.User;
 import com.artu.entity.users.account.PasswordChangeHistory;
+import com.artu.entity.users.activity.UserImg;
 import com.artu.entity.users.activity.UserProfile;
 import com.artu.entity.users.activity.UserStat;
 import com.artu.mapper.UserMapper;
-import com.artu.repository.users.PasswordChangeHistoryRepository;
-import com.artu.repository.users.UserProfileRepository;
-import com.artu.repository.users.UserRepository;
+import com.artu.repository.users.*;
 
-import com.artu.repository.users.UserStatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder; // 비밀번호 암호화를 위해 필요
 import org.springframework.stereotype.Service;
@@ -31,6 +29,7 @@ public class UserAccountServiceImp implements UserAccountService {
     private final UserProfileRepository userProfileRepository;
     private final UserStatRepository userStatRepository;
     private final PasswordChangeHistoryRepository passwordChangeHistoryRepository;
+    private final UserImgRepository userImgRepository;
 
 
 /*
@@ -102,7 +101,7 @@ public class UserAccountServiceImp implements UserAccountService {
         }
 
         // 2. 비밀번호 암호화
-         String encodedPassword = passwordEncoder.encode(signupRequestDto.getPassword());
+        String encodedPassword = passwordEncoder.encode(signupRequestDto.getPassword());
 
 
         // 3. User 관련 엔티티 생성 및 필드 설정 (MapStruct 활용).
@@ -116,7 +115,7 @@ public class UserAccountServiceImp implements UserAccountService {
         user.setPassword(encodedPassword);
         user.setRole(User.UserRole.USER);
         user.setIsUsed(true);
-        user.setCreatedAt(Instant.now());
+        user.setCreatedAt(LocalDateTime.now());
         User savedUser = userRepository.save(user); // DB에 User 엔티티 저장
         // save() 메서드는 "저장된 엔티티 객체"를 반환. 아래에서 써야하므로.
 
@@ -156,65 +155,63 @@ public class UserAccountServiceImp implements UserAccountService {
         return userProfileRepository.existsByEmail(email);
     }
 
+
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ로그인
     @Override
-    @Transactional(readOnly = true) // 읽기 전용 트랜잭션으로 성능 최적화
+    @Transactional(readOnly = true) // 읽기 전용 트랜잭션으로, JPA(Hibernate)에서 더티 체킹(Dirty Checking)을 생략하여 성능 최적화
     public Optional<User> login(UserDto.LoginRequestDto requestDto) {
 
         // 1. 사용자 ID로 사용자 조회
         Optional<User> optionalUser = userRepository.findByUserId(requestDto.getUserId());
 
-        if (optionalUser.isPresent()) {
+        if (optionalUser.isPresent() && optionalUser.get().getIsUsed()) {
             User user = optionalUser.get();
             // 2. 비밀번호 일치 여부 확인
             if (passwordEncoder.matches(requestDto.getPassword(), user.getPassword())) {
-                // matches(CharSequence rawPassword, String encodedPassword)
+                // matches(입력한 비밀번호 , 저장된 암호화된 비밀번호)
+
                 // 3. 로그인 성공 시, 로그인 로그 등 추가 처리 가능
                 // TODO: userLoginLogService.createLog(user.getUserNo(), request.getIpAddress(), request.getUserAgent());
-                return Optional.of(user);
+                return Optional.of(user); // 모두 성공시 user 객체 반환
             }
         }
         // 사용자 ID가 없거나 비밀번호가 일치하지 않으면 빈 Optional 반환
         return Optional.empty();
     }
 
-    // 아이디,비번 찾기
-    // 이메일을 통해 사용자 ID를 찾습니다.
+
+    /* 아이디와 비번 찾을 때,
+    1) 이메일의 일부를 보여주고 일부를 요청자에게 확인해야하며,
+    2) 이름과 이메일이 모두 일치하면, 아이디의 일부를 보여준다.
+    3) 그래도 모르겠는 경우, 그 이메일로 메일을 보내서 아이디를 알려주거나
+    3-1) 비밀번호를 재설정 할 수 있는 url을 보내줄 예정.  */
     @Override
     @Transactional(readOnly = true)
-    public Optional<UserDto.UserIdFindResponseDto> readUserIdByEmail(UserDto.UserIdFindRequestDto requestDto) {
-        // 1. 이메일로 사용자 조회
-        Optional<User> optionalUser = userRepository.findByEmail(requestDto.getEmail());
+    public Optional<UserDto.UserIdFindResponseDto> readUserIdByNameAndEmail(UserDto.UserIdFindRequestDto requestDto) {
+        // 1. 이름과 이메일이 모두 일치하는 사용자 조회
+        Optional<User> optionalUser = userProfileRepository.findByNameAndEmail(requestDto.getName(), requestDto.getEmail());
 
         if (optionalUser.isPresent()) {
-            // 2. 사용자 ID를 DTO에 담아 반환
-            // TODO: 실제 서비스에서는 이메일의 일부만 보여주거나, 본인 인증 절차를 거쳐야 함.
-            // 현재는 간단히 찾은 ID를 바로 반환하는 로직으로 구현.
-            return Optional.of(new UserDto.UserIdFindResponseDto(optionalUser.get().getUserId()));
+            User user = optionalUser.get();
+            String fullUserId = user.getUserId();
+
+            // 2. 사용자 ID는 항상 6자 이상이므로, 별표 개수를 계산하여 마스킹
+            String maskedUserId = fullUserId.substring(0, 2) + // 앞 2자리 추출
+                    "*".repeat(fullUserId.length() - 3) + // 중간 (총 길이 - 앞 2자 - 뒤 1자)만큼 별표
+                    fullUserId.substring(fullUserId.length() - 1); // 뒤 1자리 추출
+            // 마스킹된 사용자 ID를 응답 DTO에 담아 반환
+            return Optional.of(new UserDto.UserIdFindResponseDto(maskedUserId));
         }
+        // 3. 이름과 이메일이 일치하는 계정을 찾을 수 없는 경우, 빈 Optional 반환
+        // 보안을 위해 특정 오류 메시지(예: 계정 없음)를 주지 않습니다.
         return Optional.empty();
     }
 
+
     // (비번 모르는 사람이 본인 인증 후) 비밀번호 재설정을 요청합니다.
     @Override
-    @Transactional
+    @Transactional // 비번 변경이기 때문에 트랜잭션.
     public void requestPasswordReset(UserDto.PasswordResetRequestDto requestDto) {
-        // 1. 사용자 ID와 이메일로 사용자 유효성 확인 (본인 인증)
-        Optional<User> optionalUser = userRepository.findByUserIdAndEmail(requestDto.getUserId(), requestDto.getEmail());
-
-        if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("사용자 ID와 이메일이 일치하는 계정을 찾을 수 없습니다.");
-        }
-
-        User user = optionalUser.get();
-        // 2. 새로운 비밀번호 암호화
-        String newEncodedPassword = passwordEncoder.encode(requestDto.getNewPassword());
-
-        // 3. 비밀번호 업데이트
-        user.updatePassword(newEncodedPassword); // User 엔티티에 비밀번호 업데이트 메서드를 추가할 것을 권장
-        userRepository.save(user); // 변경된 엔티티 저장
-
-        // TODO: password_change_histories 테이블에 기록하는 로직 추가
     }
 
 
@@ -223,13 +220,9 @@ public class UserAccountServiceImp implements UserAccountService {
     @Transactional
     public void changePassword(String userId, UserDto.PasswordChangeRequestDto requestDto) {
         // 1. 사용자 ID로 사용자 조회
-        Optional<User> optionalUser = userRepository.findByUserId(userId);
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")); // Optional.orElseThrow 사용
 
-        if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
-        }
-
-        User user = optionalUser.get();
 
         // 2. 현재 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(requestDto.getCurrentPassword(), user.getPassword())) {
@@ -238,43 +231,40 @@ public class UserAccountServiceImp implements UserAccountService {
 
         // 3. 새로운 비밀번호 암호화 및 업데이트
         String newEncodedPassword = passwordEncoder.encode(requestDto.getNewPassword());
-        user.updatePassword(newEncodedPassword); // User 엔티티에 비밀번호 업데이트 메서드 추가
+        user.setPassword(newEncodedPassword); // User 엔티티에 비밀번호 업데이트 메서드 추가
         userRepository.save(user); // 변경된 엔티티 저장
 
-        // TODO: password_change_histories 테이블에 기록하는 로직 추가
+        // 4. password_change_histories 테이블에 기록하는 로직 추가
+        PasswordChangeHistory passwordChangeHistory = new PasswordChangeHistory();
+        passwordChangeHistory.setUserNo(user.getUserNo());
+        passwordChangeHistory.setOldPw(user.getPassword());
+        passwordChangeHistory.setChangedAt(Instant.now());
+        passwordChangeHistory.setIsUsed(true);
+        passwordChangeHistoryRepository.save(passwordChangeHistory);
     }
+
 
     // 특정 사용자 ID로 본인의 계정 상세 프로필 정보 모두를 조회합니다.
     @Override
     @Transactional(readOnly = true)
-    public Optional<UserDto.UserProfileResponseDto> getUserAccountInfo(String userId) {
-        // 1. 사용자 ID로 사용자 엔티티 조회
-        Optional<User> optionalUser = userRepository.findByUserId(userId);
+    public Optional<UserDto.UserProfileResponseDto> getUserAccountProfile(String userId) {
 
-        if (optionalUser.isEmpty()) {
+        // 1. 사용자 ID로 사용자 엔티티 조회
+        User user = userRepository.findByUserId(userId)
+                .orElse(null); // Optional.orElse(null) 또는 Optional.empty() 반환 시 처리
+        if (user == null) {
             return Optional.empty();
         }
 
-        User user = optionalUser.get();
-
         // 2. 조회된 User 엔티티와 관련 정보(user_stats, user_img)를 UserProfileResponseDto로 변환
-        // TODO: UserStatsRepository, UserImgRepository 등을 주입받아 관련 정보를 함께 조회하여 DTO에 매핑해야 함.
-        // 현재는 User 엔티티의 직접적인 필드와 가정된 필드만 매핑.
-        UserDto.UserProfileResponseDto responseDto = UserDto.UserProfileResponseDto.builder()
-                .userId(user.getUserId())
-                .email(user.getEmail())
-                .name(user.getName())
-                .phone(user.getPhone())
-                .birth(user.getBirth())
-                .gender(user.getGender())
-                .nickname(user.getNickname()) // 닉네임 추가
-                // .followingCount(userStats.getFollowingCount()) // user_stats에서 가져올 필드
-                // .followerCount(userStats.getFollowerCount())   // user_stats에서 가져올 필드
-                // .postCount(userStats.getPostCount())           // user_stats에서 가져올 필드
-                // .profileImageUrl(userImg.getImgUrl()) // user_img에서 가져올 필드
-                .build();
+        int userNo = user.getUserNo();
+        Optional<UserProfile> userProfile = userProfileRepository.findById(userNo);
+        Optional<UserImg> userImg = userImgRepository.findByUserNo(userNo);
+        UserDto.UserProfileResponseDto userProfileResponseDto = userMapper.toUserProfileResponseDto(user, userProfile.get());
+        userProfileResponseDto.setProfileImageUrl(userImg.get().getPrfImgUrl());
+        // TODO: 서비스상 user_stats에서 팔로잉/팔로워수 필요하면 불러와서 여기서 set하면 됨
 
-        return Optional.of(responseDto);
+        return Optional.of(userProfileResponseDto);
     }
 
     // 회원 탈퇴
@@ -282,29 +272,40 @@ public class UserAccountServiceImp implements UserAccountService {
     @Transactional
     public void withdrawAccount(String userId, String password) {
         // 1. 사용자 ID로 사용자 조회
-        Optional<User> optionalUser = userRepository.findByUserId(userId);
-
-        if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("사용자를 찾을 수 없습니다.");
-        }
-
-        User user = optionalUser.get();
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         // 2. 비밀번호 일치 여부 확인
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        // 3. 계정 논리적 삭제 (is_used = false)
-        if (user.isUsed()) { // 이미 탈퇴된 계정인지 확인
-            user.setUsed(false); // is_used 필드를 false로 변경
-            user.setDropoutAt(LocalDateTime.now()); // 탈퇴 시간 기록
-            userRepository.save(user); // 변경사항 저장
-
-            // TODO: 관련된 다른 테이블의 데이터도 논리적으로 삭제 처리 (예: posting.is_used, oneday_classes.is_used 등)
-            // TODO: 혹은 특정 기간 후 물리적 삭제를 위한 스케줄링 처리
-        } else {
+        // 3. 계정 논리삭제 (is_used = false)
+        if (!user.getIsUsed()) { // 이미 탈퇴된 계정인지 확인 (isUsed가 false인 경우)
             throw new IllegalStateException("이미 탈퇴 처리된 계정입니다.");
         }
+        // 사용자 엔티티 상태 변경
+        user.setIsUsed(false);
+        user.setDropoutAt(LocalDateTime.now()); // Instant 대신 LocalDateTime 사용 권장
+        user.setMemo("유저에 의한 탈퇴"); // 상수로 관리하는 것이 좋음: UserConstants.USER_WITHDRAW_MEMO
+
+        // 관련된 다른 엔티티들의 상태 변경 (Optional 처리 강화)
+        userProfileRepository.findById(user.getUserNo()).ifPresent(profile -> {
+            profile.setIsUsed(false);
+            userProfileRepository.save(profile);
+        });
+
+        userStatRepository.findById(user.getUserNo()).ifPresent(stats -> {
+            stats.setIsUsed(false);
+            userStatRepository.save(stats);
+        });
+
+        userImgRepository.findByUserNo(user.getUserNo()).ifPresent(img -> {
+            img.setIsUsed(false);
+            userImgRepository.save(img);
+        });
+
+        userRepository.save(user); // User 엔티티 변경사항 저장
+
     }
 }

@@ -111,9 +111,11 @@ public class UserDto {
     @AllArgsConstructor
     public static class UserIdFindRequestDto {
         @NotBlank
+        private String name;
+        @NotBlank
         private String email;
     }
-    // 9. 아이디 찾기 응답 DTO
+    // 9. 아이디 찾기위한 아이디 응답 DTO
     @Getter
     @Setter
     @ToString
@@ -133,6 +135,7 @@ public class UserDto {
     @NoArgsConstructor // 기본 생성자 필요
     public static class UserProfileResponseDto {
         private String userId;
+        private String nickname;
         private String email;
         private String name;
         private String phone;
@@ -141,7 +144,6 @@ public class UserDto {
         private int followingCount; // user_stats 정보
         private int followerCount;  // user_stats 정보
         private int postCount;      // user_stats 정보
-        private String nickname;
         private String profileImageUrl; // user_img 정보
         // 기타 필요 정보 (예: 생성일, 역할 등) 추가 가능
     }

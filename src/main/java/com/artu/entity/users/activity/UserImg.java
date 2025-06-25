@@ -16,9 +16,6 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "user_img")
 public class UserImg {
     @Id
@@ -31,10 +28,9 @@ public class UserImg {
     @Column(name = "prf_img_url", nullable = false)
     private String prfImgUrl;
 
-    @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @Column
     @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    private Integer userNo;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
