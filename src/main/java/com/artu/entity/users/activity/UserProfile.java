@@ -53,7 +53,7 @@ public class UserProfile {
     @NotNull
     @ColumnDefault("1")
     @Column(name = "is_used", nullable = false)
-    private Boolean isUsed = false;
+    private Boolean isUsed;
 
 
 }

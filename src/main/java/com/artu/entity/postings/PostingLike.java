@@ -16,8 +16,6 @@ import java.time.Instant;
 @Setter
 @Entity
 @ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "posting_like")
 public class PostingLike {
     @EmbeddedId

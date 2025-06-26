@@ -16,7 +16,7 @@ import lombok.Setter;
 public class Category {
     @Id
     @Column(name = "ctgr_id", nullable = false)
-    private Byte id;
+    private Byte ctgrId;
 
     @Size(max = 50)
     @NotNull

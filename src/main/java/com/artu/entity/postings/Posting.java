@@ -18,11 +18,13 @@ import java.time.Instant;
 @Setter
 @Entity
 @ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "postings")
 public class Posting implements Serializable {
     private static final long serialVersionUID = 526733583585891060L;
+
+//    public enum VisibilityType {all, friends, private}
+    // private 예약어 사용이라서 변경 필요
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", nullable = false)
@@ -41,6 +43,7 @@ public class Posting implements Serializable {
     @ColumnDefault("'all'")
     @Lob
     @Column(name = "visibility_type")
+//    private VisibilityType visibilityType;
     private String visibilityType;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

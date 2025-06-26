@@ -21,7 +21,7 @@ public class UserEventBmark {
     @MapsId
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_no", nullable = false)
-    private User userNo;
+    private User user;
 
     @MapsId
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

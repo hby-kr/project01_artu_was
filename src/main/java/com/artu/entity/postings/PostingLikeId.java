@@ -23,6 +23,13 @@ public class PostingLikeId implements Serializable {
     @Column(name = "post_id", nullable = false)
     private Integer postId;
 
+    public PostingLikeId(Integer userNo, Integer postId) {
+        this.userNo = userNo;
+        this.postId = postId;
+    }
+
+    public PostingLikeId() {}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

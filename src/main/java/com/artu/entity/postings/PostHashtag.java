@@ -12,8 +12,6 @@ import org.hibernate.annotations.Where;
 @Setter
 @Entity
 @ToString
-@SQLDelete(sql = "UPDATE postings SET is_used = false WHERE post_id = ?")
-@Where(clause = "is_used = true")
 @Table(name = "post_hashtags")
 public class PostHashtag {
     @EmbeddedId
@@ -22,6 +20,10 @@ public class PostHashtag {
     @MapsId("tagId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "tag_id", nullable = false)
-    private Hashtag tagId;
+    private Hashtag hashtag;
 
+    @MapsId("postId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Posting post;
 }

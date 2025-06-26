@@ -3,6 +3,8 @@ package com.artu.dto;
 import com.artu.entity.users.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.time.Instant;
 import java.time.LocalDate; // birth 필드 추가를 위해 임포트
 
 public class UserDto {
@@ -115,6 +117,7 @@ public class UserDto {
         @NotBlank
         private String email;
     }
+
     // 9. 아이디 찾기위한 아이디 응답 DTO
     @Getter
     @Setter
@@ -147,4 +150,42 @@ public class UserDto {
         private String profileImageUrl; // user_img 정보
         // 기타 필요 정보 (예: 생성일, 역할 등) 추가 가능
     }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserFollowDto {
+        private Integer followerId;
+        private Integer followeeId;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserInquireDto {
+        private Integer userNo;
+        private String inquireCategory;
+        private String title;
+        private String contents;
+        private Integer paymentId;
+        private String inquiryImgUrl;
+        private String inquiryState;
+        private Boolean isUsed;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserSettingDto {
+        private Integer userNo;
+        private String displayColor;
+        private String language;
+        private Instant setAt;
+        private Boolean isUsed;
+    }
 }
+
+

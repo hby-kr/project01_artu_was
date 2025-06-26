@@ -16,6 +16,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "user_img")
 public class UserImg {
     @Id

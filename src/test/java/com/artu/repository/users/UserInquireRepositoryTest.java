@@ -1,5 +1,6 @@
 package com.artu.repository.users;
 
+import com.artu.entity.users.activity.UserInquire;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,6 @@ class UserInquireRepositoryTest {
 
     @Test
     void findByInquireCategory() {
-        System.out.println(userInquireRepository.findByInquireCategory("계정"));
+        System.out.println(userInquireRepository.findByInquireCategory(UserInquire.InquireCategory.account));
     }
 }
