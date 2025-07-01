@@ -17,6 +17,7 @@ public class OnedayClassDto {
         private Integer userNo;
         private String onedayName;
         private Integer ctgrId;
+        private String ctgrName;
         private String location;
         private String address;
         private Integer minMem;
@@ -42,7 +43,22 @@ public class OnedayClassDto {
         private Boolean isApproved;
     }
 
-    // 원데이클래스 업데이트
+    // 원데이클래스 수정
+    @Getter
+    @Setter
+    @ToString
+    public static class OnedayClassUpdateDto {
+        private Integer onedayId;
+        private Integer userNo;
+        private String userId;
+        private String onedayName;
+        private Integer ctgrId;
+        private String ctgrName;
+        private String location;
+        private String address;
+        private Integer minMem;
+        private Integer maxMem;
+    }
 
 
     // 원데이 데이트 등록
@@ -70,6 +86,20 @@ public class OnedayClassDto {
         private LocalTime endTime;
     }
 
+    // 원데이 데이트 수정
+    @Getter
+    @Setter
+    @ToString
+    public static class OnedayDatesUpdateDto {
+        private Integer dateId;
+        private Integer onedayId;
+        private Integer onedayPrice;
+        private LocalDate onedayDate;
+        private LocalTime startTime;
+        private LocalTime endTime;
+    }
+
+
     // 옵션 등록
     @Getter
     @Setter
@@ -90,5 +120,16 @@ public class OnedayClassDto {
         private String optName;
         private Integer optPrice;
         private Instant createdAt;
+    }
+
+    // 옵션 수정
+    @Getter
+    @Setter
+    @ToString
+    public static class OnedayOptionUpdateDto {
+        private Integer optId;
+        private Integer dateId;
+        private String optName;
+        private Integer optPrice;
     }
 }

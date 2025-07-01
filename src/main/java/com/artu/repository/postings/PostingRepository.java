@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface PostingRepository extends JpaRepository<Posting, Integer> {
     // user의 게시글 조회
-    Set<Posting> findByUser_UserNo(Integer userNo);
+    List<Posting> findByUser_UserNo(Integer userNo);
 
     // 게시글 조회
     Posting findByPostId(Integer postId);

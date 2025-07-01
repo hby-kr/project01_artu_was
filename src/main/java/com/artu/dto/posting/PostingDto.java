@@ -43,8 +43,4 @@ public class PostingDto {
         private Instant editedAt;
     }
 
-
-
-
-
 }
