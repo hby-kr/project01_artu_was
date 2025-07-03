@@ -36,12 +36,6 @@ public interface UserMapper {
     // UserDto.SignupRequestDto -> User 엔터티 매핑
     @Mapping(target = "userId", source = "userId")
     @Mapping(target = "password", source = "password")
-    @Mapping(target = "email", ignore = true)
-    @Mapping(target = "name", ignore = true)
-    @Mapping(target = "phone", ignore = true)
-    @Mapping(target = "birth", ignore = true)
-    @Mapping(target = "gender", ignore = true)
-    @Mapping(target = "nickname", ignore = true)
     @Mapping(target = "userNo", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "oauth", ignore = true)

@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,14 +24,12 @@ public class EventReview {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User userNo;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    @Column(name = "event_id", nullable = false)
+    private Integer eventId;
 
     @NotNull
     @Column(name = "rate", nullable = false)
@@ -53,5 +53,8 @@ public class EventReview {
     @Size(max = 255)
     @Column(name = "memo")
     private String memo;
+
+    @OneToMany(mappedBy = "review")
+    private Set<EventReviewImage> eventReviewImages = new LinkedHashSet<>();
 
 }

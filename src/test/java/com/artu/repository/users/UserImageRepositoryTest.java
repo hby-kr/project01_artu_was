@@ -15,6 +15,6 @@ class UserImageRepositoryTest {
 
     @Test
     void findUserImgByUser_UserNo() {
-        System.out.println(userImageRepository.findUserImgByUser_UserNo(1));
+         System.out.println(userImageRepository.findUserImgByUser_UserNo(1));
     }
 }

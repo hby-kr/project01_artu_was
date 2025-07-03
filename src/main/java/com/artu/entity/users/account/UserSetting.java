@@ -25,9 +25,8 @@ public class UserSetting {
     private Integer settingId;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @ColumnDefault("'light'")
     @Lob

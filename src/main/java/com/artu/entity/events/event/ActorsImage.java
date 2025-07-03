@@ -25,9 +25,8 @@ public class ActorsImage {
     private String imgUrl;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "actor_id", nullable = false)
-    private Actor actor;
+    @Column(name = "actor_id", nullable = false)
+    private Integer actorId;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")

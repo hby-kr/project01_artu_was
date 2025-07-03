@@ -1,12 +1,17 @@
 package com.artu.entity.events.event;
 
 import com.artu.entity.base.Category;
+import com.artu.entity.events.EventReview;
+import com.artu.entity.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,9 +24,8 @@ public class Event {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ctgr_id", nullable = false)
-    private Category ctgr;
+    @Column(name = "ctgr_id", nullable = false)
+    private Integer ctgrId;
 
     @Size(max = 100)
     @NotNull
@@ -71,7 +75,20 @@ public class Event {
     private String memo;
 
     @NotNull
-    @Column(name = "user_no", nullable = false)
-    private int userNo;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_no", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "event")
+    private Set<EventCast> eventCasts = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "event")
+    private Set<EventDetailImage> eventDetailImages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "event")
+    private Set<EventImage> eventImages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "event")
+    private Set<EventReview> eventReviews = new LinkedHashSet<>();
 
 }

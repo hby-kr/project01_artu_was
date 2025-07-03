@@ -1,9 +1,8 @@
-package com.artu.entity.users.account;
+package com.artu.entity.users.chat;
 
 import com.artu.entity.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,28 +12,32 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "userlogin_logs")
-public class UserloginLog {
+@Table(name = "messages")
+public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "log_id", nullable = false)
-    private Integer id;
+    @Column(name = "msg_id", nullable = false)
+    private Integer msgId;
+
+    @NotNull
+    @Column(name = "chat_id", nullable = false)
+    private Integer chatId;
 
     @NotNull
     @Column(name = "user_no", nullable = false)
     private Integer userNo;
 
+    @NotNull
+    @Column(name = "msg_body", nullable = false)
+    private String msgBody;
+
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "login_at")
-    private Instant loginAt;
+    @Column(name = "created_at")
+    private Instant createdAt;
 
-    @Size(max = 45)
-    @Column(name = "ip_address", length = 45)
-    private String ipAddress;
-
-    @Size(max = 255)
-    @Column(name = "user_agent")
-    private String userAgent;
+    @Column(name = "read_at")
+    private Instant readAt;
 
     @NotNull
     @ColumnDefault("1")

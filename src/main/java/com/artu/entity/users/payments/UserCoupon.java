@@ -17,12 +17,11 @@ public class UserCoupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_coupon_id", nullable = false)
-    private Integer id;
+    private Integer couponId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User userNo;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "issued_at")

@@ -17,7 +17,7 @@ public class EventDetailImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "img_id", nullable = false)
-    private Integer id;
+    private Integer imgId;
 
     @Size(max = 255)
     @NotNull

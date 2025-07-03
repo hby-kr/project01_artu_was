@@ -16,7 +16,7 @@ public class EventDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "date_id", nullable = false)
-    private Integer id;
+    private Integer dateId;
 
     @NotNull
     @Column(name = "event_date", nullable = false)

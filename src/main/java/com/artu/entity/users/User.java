@@ -4,20 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Where(clause = "is_used = true") // 특정 조건을 만족하는 데이터를 조회할 때 추가적인 필터를 적용하는 데 사용
 // is_used = true 라는 조건을 추가하여, is_used가 true 인 항목만 조회되도록 설정
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
 
@@ -60,10 +61,10 @@ public class User {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(name = "dropout_at")
-    private LocalDateTime dropoutAt;
+    private Instant dropoutAt;
 
     @Column(name = "memo")
     private String memo;

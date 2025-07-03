@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -29,7 +28,7 @@ public class UserAccountServiceImp implements UserAccountService {
     private final UserProfileRepository userProfileRepository;
     private final UserStatRepository userStatRepository;
     private final PasswordChangeHistoryRepository passwordChangeHistoryRepository;
-    private final UserImgRepository userImgRepository;
+    private final UserImageRepository userImageRepository;
 
 
 /*
@@ -115,7 +114,7 @@ public class UserAccountServiceImp implements UserAccountService {
         user.setPassword(encodedPassword);
         user.setRole(User.UserRole.USER);
         user.setIsUsed(true);
-        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedAt(Instant.now());
         User savedUser = userRepository.save(user); // DB에 User 엔티티 저장
         // save() 메서드는 "저장된 엔티티 객체"를 반환. 아래에서 써야하므로.
 
@@ -259,7 +258,7 @@ public class UserAccountServiceImp implements UserAccountService {
         // 2. 조회된 User 엔티티와 관련 정보(user_stats, user_img)를 UserProfileResponseDto로 변환
         int userNo = user.getUserNo();
         Optional<UserProfile> userProfile = userProfileRepository.findById(userNo);
-        Optional<UserImg> userImg = userImgRepository.findByUserNo(userNo);
+        Optional<UserImg> userImg = userImageRepository.findByUserNo(userNo);
         UserDto.UserProfileResponseDto userProfileResponseDto = userMapper.toUserProfileResponseDto(user, userProfile.get());
         userProfileResponseDto.setProfileImageUrl(userImg.get().getPrfImgUrl());
         // TODO: 서비스상 user_stats에서 팔로잉/팔로워수 필요하면 불러와서 여기서 set하면 됨
@@ -286,7 +285,7 @@ public class UserAccountServiceImp implements UserAccountService {
         }
         // 사용자 엔티티 상태 변경
         user.setIsUsed(false);
-        user.setDropoutAt(LocalDateTime.now()); // Instant 대신 LocalDateTime 사용 권장
+        user.setDropoutAt(Instant.now());
         user.setMemo("유저에 의한 탈퇴"); // 상수로 관리하는 것이 좋음: UserConstants.USER_WITHDRAW_MEMO
 
         // 관련된 다른 엔티티들의 상태 변경 (Optional 처리 강화)
@@ -300,9 +299,9 @@ public class UserAccountServiceImp implements UserAccountService {
             userStatRepository.save(stats);
         });
 
-        userImgRepository.findByUserNo(user.getUserNo()).ifPresent(img -> {
+        userImageRepository.findByUserNo(user.getUserNo()).ifPresent(img -> {
             img.setIsUsed(false);
-            userImgRepository.save(img);
+            userImageRepository.save(img);
         });
 
         userRepository.save(user); // User 엔티티 변경사항 저장

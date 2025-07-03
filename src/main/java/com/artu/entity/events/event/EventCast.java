@@ -14,11 +14,15 @@ public class EventCast {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cast_id", nullable = false)
-    private Integer id;
+    private Integer castId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "actor_id")
-    private Actor actor;
+    @NotNull
+    @Column(name = "event_id", nullable = false)
+    private Integer eventId;
+
+    @NotNull
+    @Column(name = "actor_id")
+    private Integer actorId;
 
     @NotNull
     @Lob
@@ -29,5 +33,6 @@ public class EventCast {
     @ColumnDefault("1")
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed = false;
+
 
 }

@@ -20,9 +20,8 @@ public class EventOption {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "date_id", nullable = false)
-    private EventDate date;
+    @Column(name = "date_id", nullable = false)
+    private Integer dateId;
 
     @Size(max = 50)
     @NotNull

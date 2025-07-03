@@ -1,4 +1,4 @@
-package com.artu.entity.users.payments;
+package com.artu.entity.users.chat;
 
 import com.artu.entity.users.User;
 import jakarta.persistence.*;
@@ -12,19 +12,25 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_carts")
-public class UserCart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id", nullable = false)
-    private Integer cartId;
+@Table(name = "user_chat_reads")
+public class UserChatRead {
 
+    @Id
+    @NotNull
+    @Column(name = "chat_id", nullable = false)
+    private Integer chatId;
+
+    @Id
     @NotNull
     @Column(name = "user_no", nullable = false)
     private Integer userNo;
 
+    @NotNull
+    @Column(name = "last_read_msg_id", nullable = false)
+    private Integer lastReadMsg;
+
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "created_at")
-    private Instant createdAt;
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 
 }

@@ -21,9 +21,8 @@ public class Report {
     private Integer reportId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User userNo;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @NotNull
     @Lob
