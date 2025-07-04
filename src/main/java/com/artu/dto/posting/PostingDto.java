@@ -24,6 +24,8 @@ public class PostingDto {
     public static class PostingResponseDto {
         private Integer postId;
         private Integer userNo;
+        private String userId;
+        private String nickname;
         private String contents;
         private Integer likeCount;
         private Instant createdAt;

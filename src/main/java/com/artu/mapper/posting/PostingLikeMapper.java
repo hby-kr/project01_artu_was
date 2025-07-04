@@ -9,16 +9,16 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PostingLikeMapper {
-    @Mapping(target = "postingLikeId.userNo", source = "userNo")
-    @Mapping(target = "postingLikeId.postId", source = "postId")
-    @Mapping(target = "user", source = "userNo")
-    @Mapping(target = "post", source = "postId")
+//    @Mapping(target = "postingLikeId.userNo", source = "userNo")
+//    @Mapping(target = "postingLikeId.postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
+    @Mapping(target = "postId", source = "postId")
     @Mapping(target = "likedAt", ignore = true)
     @Mapping(target = "isUsed", constant = "true")
     PostingLike toEntity(PostingLikeDto postingLikeDto);
 
-    @Mapping(source = "postingLikeId.userNo", target = "userNo")
-    @Mapping(source = "postingLikeId.postId", target = "postId")
+    @Mapping(source = "userNo", target = "userNo")
+    @Mapping(source = "postId", target = "postId")
     PostingLikeDto toDto(PostingLike postingLikeEntity);
 
     default User mapUser(Integer userNo) {

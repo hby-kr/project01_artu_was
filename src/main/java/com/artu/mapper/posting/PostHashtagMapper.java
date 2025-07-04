@@ -12,16 +12,16 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PostHashtagMapper {
-    @Mapping(target = "postHashtagId.tagId", source = "tagId")
-    @Mapping(target = "postHashtagId.postId", source = "postId")
-    @Mapping(target = "hashtag", source = "tagId")
-    @Mapping(target = "post", source = "postId")
+//    @Mapping(target = "postHashtagId.tagId", source = "tagId")
+//    @Mapping(target = "postHashtagId.postId", source = "postId")
+    @Mapping(target = "tagId", source = "tagId")
+    @Mapping(target = "postId", source = "postId")
     PostHashtag toHashtagEntity(PostHashtagDto.PostingHashtagsDto postingHashtagsDto);
 
-    @Mapping(target = "id.postId", source = "postId")
-    @Mapping(target = "id.userNo", source = "userNo")
-    @Mapping(target = "post", source = "postId")
-    @Mapping(target = "user", source = "userNo")
+//    @Mapping(target = "id.postId", source = "postId")
+//    @Mapping(target = "id.userNo", source = "userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     PostPersonTag toPersonTagEntity(PostHashtagDto.PostingPersonTagDto postingPersonTagDto);
 
     @Mapping(target = "postId", source = "postId")
@@ -31,16 +31,16 @@ public interface PostHashtagMapper {
     @Mapping(target = "value", source = "value")
     PostTagLink toTagLinkEntity(PostHashtagDto.PostingTagLinkDto postingTagLinkDto);
 
-    @Mapping(target = "tagId", source = "hashtag.tagId")
-    @Mapping(target = "postId", source = "post.postId")
+    @Mapping(target = "tagId", source = "tagId")
+    @Mapping(target = "postId", source = "postId")
     PostHashtagDto.PostingHashtagsDto toHashtagDto(PostHashtag postHashtag);
 
-    @Mapping(target = "userNo", source = "user.userNo")
-    @Mapping(target = "userId", source = "user.userId")
-    @Mapping(target = "postId", source = "post.postId")
+    @Mapping(target = "userNo", source = "userNo")
+//    @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "postId", source = "postId")
     PostHashtagDto.PostingPersonTagDto toPersonTagDto(PostPersonTag postPersonTag);
 
-    @Mapping(target = "postId", source = "postId.postId")
+    @Mapping(target = "postId", source = "postId")
     @Mapping(target = "tagType", source = "tagType")
     @Mapping(target = "selectedId", source = "selectedId")
     @Mapping(target = "tagKeyword", source = "tagKeyword")

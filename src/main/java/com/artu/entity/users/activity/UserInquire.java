@@ -30,9 +30,8 @@ public class UserInquire {
     private Integer inquireId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @ColumnDefault("'etc'")
     @Lob

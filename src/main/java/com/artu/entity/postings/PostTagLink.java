@@ -19,9 +19,8 @@ public class PostTagLink {
     public enum TagType {oneday, events, location}
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Posting postId;
+    @Column(name = "post_id", nullable = false)
+    private Integer postId;
 
     @NotNull
     @Lob

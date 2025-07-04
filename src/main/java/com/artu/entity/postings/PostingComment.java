@@ -25,14 +25,12 @@ public class PostingComment {
     private Integer commentId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Posting post;
+    @Column(name = "post_id", nullable = false)
+    private Integer postId;
 
     @NotNull
     @Lob

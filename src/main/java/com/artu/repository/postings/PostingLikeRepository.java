@@ -10,9 +10,9 @@ import java.util.Set;
 @Repository
 public interface PostingLikeRepository extends JpaRepository<PostingLike, PostingLikeId> {
     // 유저의 좋아요 목록
-    Set<PostingLike> findByUser_UserNo(Integer userNo);
+    Set<PostingLike> findByUserNo(Integer userNo);
 
     // 게시물 좋아요 카운트
-    Long countPostingLikeByPost_PostId(Integer postId);
+    Long countPostingLikeByPostId(Integer postId);
 
 }

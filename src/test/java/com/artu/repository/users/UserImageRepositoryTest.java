@@ -13,8 +13,8 @@ class UserImageRepositoryTest {
     @Autowired
     UserImageRepository userImageRepository;
 
-    @Test
-    void findUserImgByUser_UserNo() {
-        System.out.println(userImageRepository.findUserImgByUser_UserNo(1));
-    }
+//    @Test
+//    void findUserImgByUser_UserNo() {
+//        System.out.println(userImageRepository.findUserImgByUserNo(1));
+//    }
 }

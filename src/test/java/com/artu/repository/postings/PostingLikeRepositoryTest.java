@@ -13,13 +13,23 @@ class PostingLikeRepositoryTest {
     @Autowired
     PostingLikeRepository postingLikeRepository;
 
+//    @Test
+//    void findByUser_UserNo() {
+//        System.out.println(postingLikeRepository.findByUser_UserNo(1));
+//    }
+//
+//    @Test
+//    void countPostingLikeByPost_PostId() {
+//        System.out.println(postingLikeRepository.countPostingLikeByPost_PostId(1));
+//    }
+
     @Test
-    void findByUser_UserNo() {
-        System.out.println(postingLikeRepository.findByUser_UserNo(1));
+    void findByUserNo() {
+        System.out.println(postingLikeRepository.findByUserNo(1));
     }
 
     @Test
-    void countPostingLikeByPost_PostId() {
-        System.out.println(postingLikeRepository.countPostingLikeByPost_PostId(1));
+    void countPostingLikeByPostId() {
+        System.out.println(postingLikeRepository.countPostingLikeByPostId(1));
     }
 }

@@ -23,9 +23,9 @@ public class PostingCommentServiceImp implements PostingCommentService {
     @Override
     public PostingCommentDto.PostingCommentResponseDto save(PostingCommentDto.PostingCommentRequestDto postingCommentRequestDto) {
         PostingComment postingComment = postingCommentMapper.toEntity(postingCommentRequestDto);
-        if (postingComment.getUser() == null || postingComment.getUser().getUserNo() == null) {
-            throw new IllegalArgumentException("사용자 확인 필요");
-        }
+//        if (postingComment.getUser() == null || postingComment.getUser().getUserNo() == null) {
+//            throw new IllegalArgumentException("사용자 확인 필요");
+//        }
         PostingComment savedPostingComment = postingCommentsRepository.save(postingComment);
         return postingCommentMapper.toResponseDto(savedPostingComment);
     }
@@ -39,8 +39,8 @@ public class PostingCommentServiceImp implements PostingCommentService {
     }
 
     @Override
-    public Set<PostingCommentDto.PostingCommentResponseDto> findByPost_PostId(Integer postId) {
-        Set<PostingComment> postingComments = postingCommentsRepository.findByPost_PostId(postId);
+    public Set<PostingCommentDto.PostingCommentResponseDto> findByPostId(Integer postId) {
+        Set<PostingComment> postingComments = postingCommentsRepository.findByPostId(postId);
         return postingComments.stream()
                 .map(postingCommentMapper::toResponseDto)
                 .collect(Collectors.toSet());
@@ -53,8 +53,8 @@ public class PostingCommentServiceImp implements PostingCommentService {
     }
 
     @Override
-    public Set<PostingCommentDto.PostingCommentResponseDto> findByUser_UserNo(Integer userNo) {
-        Set<PostingComment> postingComments = postingCommentsRepository.findByUser_UserNo(userNo);
+    public Set<PostingCommentDto.PostingCommentResponseDto> findByUserNo(Integer userNo) {
+        Set<PostingComment> postingComments = postingCommentsRepository.findByUserNo(userNo);
         return postingComments.stream()
                 .map(postingCommentMapper::toResponseDto)
                 .collect(Collectors.toSet());

@@ -16,20 +16,19 @@ import java.time.Instant;
 @Setter
 @Entity
 @ToString
+@IdClass(PostingLikeId.class)
 @Table(name = "posting_like")
 public class PostingLike {
-    @EmbeddedId
-    private PostingLikeId postingLikeId;
+//    @EmbeddedId
+//    private PostingLikeId postingLikeId;
 
-    @MapsId("userNo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Id
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
-    @MapsId("postId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Posting post;
+    @Id
+    @Column(name = "post_id", nullable = false)
+    private Integer postId;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "liked_at")

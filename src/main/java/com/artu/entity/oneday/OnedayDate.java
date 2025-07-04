@@ -23,9 +23,8 @@ public class OnedayDate {
     private Integer dateId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "oneday_id", nullable = false)
-    private OnedayClass onedayClass;
+    @Column(name = "oneday_id", nullable = false)
+    private Integer onedayId;
 
     @NotNull
     @Column(name = "oneday_price", nullable = false)

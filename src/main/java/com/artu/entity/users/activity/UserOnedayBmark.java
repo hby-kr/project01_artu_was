@@ -13,20 +13,19 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
+@IdClass(UserOnedayBmarkId.class)
 @Table(name = "user_oneday_bmarks")
 public class UserOnedayBmark {
-    @EmbeddedId
-    private UserOnedayBmarkId id;
+//    @EmbeddedId
+//    private UserOnedayBmarkId id;
 
-    @MapsId("userNo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Id
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
-    @MapsId("onedayId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "oneday_id", nullable = false)
-    private OnedayClass oneday;
+    @Id
+    @Column(name = "oneday_id", nullable = false)
+    private Integer onedayId;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")

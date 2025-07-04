@@ -29,8 +29,7 @@ public class UserImg {
     @Column(name = "prf_img_url", nullable = false)
     private String prfImgUrl;
 
-    @Column
-    @JoinColumn(name = "user_no", nullable = false)
+    @Column(name = "user_no", nullable = false)
     private Integer userNo;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

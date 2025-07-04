@@ -117,12 +117,12 @@ public interface OnedayClassMapper {
         return user;
     }
 
-    default Category mapCategory(Integer ctgrId) {
-        if (ctgrId == null) return null;
-        Category category = new Category();
-        category.setCtgrId(ctgrId);
-        return category;
-    }
+//    default Category mapCategory(Integer ctgrId) {
+//        if (ctgrId == null) return null;
+//        Category category = new Category();
+//        category.setCtgrId(ctgrId);
+//        return category;
+//    }
 
     default OnedayClass mapOnedayClass(Integer onedayId) {
         if (onedayId == null) return null;

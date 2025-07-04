@@ -9,5 +9,5 @@ import java.util.Set;
 @Repository
 public interface UserImageRepository extends JpaRepository<UserImg, Integer> {
     // 유저의 이미지
-    Set<UserImg> findUserImgByUser_UserNo(Integer userNo);
+    // Set<UserImg> findUserImgByUser_UserNo(Integer userNo);
 }

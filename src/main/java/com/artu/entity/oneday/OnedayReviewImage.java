@@ -26,9 +26,8 @@ public class OnedayReviewImage {
     private String imgUrl;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "review_id", nullable = false)
-    private OnedayReview onedayReview;
+    @Column(name = "review_id", nullable = false)
+    private Integer reviewId;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")

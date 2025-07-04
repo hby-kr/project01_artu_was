@@ -32,6 +32,7 @@ public class OnedayClassDto {
         private Integer onedayId;
         private Integer userNo;
         private String userId;
+        private String nickname;
         private String onedayName;
         private Integer ctgrId;
         private String ctgrName;
@@ -51,6 +52,7 @@ public class OnedayClassDto {
         private Integer onedayId;
         private Integer userNo;
         private String userId;
+        private String nickname;
         private String onedayName;
         private Integer ctgrId;
         private String ctgrName;

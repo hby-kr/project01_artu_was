@@ -22,9 +22,8 @@ public class OnedayImage {
     private Integer imgId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "oneday_id", nullable = false)
-    private OnedayClass oneday;
+    @Column(name = "oneday_id", nullable = false)
+    private Integer onedayId;
 
     @Size(max = 255)
     @NotNull

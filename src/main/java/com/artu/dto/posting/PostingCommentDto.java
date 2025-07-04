@@ -28,6 +28,7 @@ public class PostingCommentDto {
         private Integer postId;
         private Integer userNo;
         private String userId;
+        private String nickname;
         private Instant createdAt;
         private Integer parentCommentId;
     }
@@ -42,6 +43,7 @@ public class PostingCommentDto {
         private Integer postId;
         private Integer userNo;
         private String userId;
+        private String nickname;
         private Integer parentCommentId;
         private Instant createdAt;
     }

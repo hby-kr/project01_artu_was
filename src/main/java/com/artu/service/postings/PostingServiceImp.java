@@ -62,8 +62,8 @@ public class PostingServiceImp implements PostingService {
     }
 
     @Override
-    public List<PostingImageDto.PostingImageResponseDto> findByPost_PostId(Integer postId) {
-        List<PostingImage> postingImage = postingImageRepository.findByPost_PostId(postId);
+    public List<PostingImageDto.PostingImageResponseDto> findByPostId(Integer postId) {
+        List<PostingImage> postingImage = postingImageRepository.findByPostId(postId);
         return postingImage.stream()
                 .map(postingImageMapper::toResponseDto)
                 .collect(Collectors.toList());

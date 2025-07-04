@@ -26,6 +26,7 @@ public class OnedayReviewDto {
         private Integer reviewId;
         private Integer userNo;
         private String userId;
+        private String nickname;
         private Integer onedayId;
         private String contents;
         private Integer rate;
@@ -39,6 +40,8 @@ public class OnedayReviewDto {
     public static class OnedayReviewUpdateDto {
         private Integer reviewId;
         private Integer userNo;
+        private String userId;
+        private String nickname;
         private Integer onedayId;
         private String contents;
         private Integer rate;
