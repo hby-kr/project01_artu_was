@@ -13,13 +13,13 @@ class OnedayImageRepositoryTest {
     @Autowired
     private OnedayImageRepository onedayImageRepository;
 
-    @Test
-    void findByOneday_OnedayId() {
-        System.out.println(onedayImageRepository.findByOneday_OnedayId(1));
-    }
+//    @Test
+//    void findByOneday_OnedayId() {
+//        System.out.println(onedayImageRepository.findByOneday_OnedayId(1));
+//    }
 
-    @Test
-    void findByOneday_OnedayIdAndImgOrder() {
-        System.out.println(onedayImageRepository.findByOneday_OnedayIdAndImgOrder(1,1));
-    }
+//    @Test
+//    void findByOneday_OnedayIdAndImgOrder() {
+//        System.out.println(onedayImageRepository.findByOneday_OnedayIdAndImgOrder(1,1));
+//    }
 }

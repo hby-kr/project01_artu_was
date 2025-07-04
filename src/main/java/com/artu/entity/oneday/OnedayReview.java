@@ -23,14 +23,12 @@ public class OnedayReview {
     private Integer reviewId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_no", nullable = false)
-    private User user;
+    @Column(name = "user_no", nullable = false)
+    private Integer userNo;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "oneday_id", nullable = false)
-    private OnedayClass onedayClass;
+    @Column(name = "oneday_id", nullable = false)
+    private Integer onedayId;
 
     @Lob
     @Column(name = "contents")

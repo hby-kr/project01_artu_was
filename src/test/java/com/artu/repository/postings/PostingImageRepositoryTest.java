@@ -15,6 +15,6 @@ class PostingImageRepositoryTest {
 
     @Test
     void findByPostId() {
-        System.out.println(postingImageRepository.findByPost_PostId(1));
+        System.out.println(postingImageRepository.findByPostId(1));
     }
 }

@@ -23,6 +23,7 @@ public class PostHashtagDto {
         private Integer postId;
         private Integer userNo;
         private String userId;
+        private String nickname;
     }
 
     // 게시물-태그 연결 등록/조회/수정

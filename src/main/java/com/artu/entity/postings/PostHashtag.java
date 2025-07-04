@@ -12,18 +12,17 @@ import org.hibernate.annotations.Where;
 @Setter
 @Entity
 @ToString
+@IdClass(PostHashtagId.class)
 @Table(name = "post_hashtags")
 public class PostHashtag {
-    @EmbeddedId
-    private PostHashtagId postHashtagId;
+//    @EmbeddedId
+//    private PostHashtagId postHashtagId;
 
-    @MapsId("tagId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "tag_id", nullable = false)
-    private Hashtag hashtag;
+    @Id
+    @Column(name = "post_id", nullable = false)
+    private Integer postId;
 
-    @MapsId("postId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Posting post;
+    @Id
+    @Column(name = "tag_id", nullable = false)
+    private Integer tagId;
 }

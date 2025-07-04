@@ -24,9 +24,8 @@ public class PostingImage {
     private Integer imgId;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Posting post;
+    @Column(name = "post_id", nullable = false)
+    private Integer postId;
 
     @NotNull
     @Column(name = "img_order", nullable = false)

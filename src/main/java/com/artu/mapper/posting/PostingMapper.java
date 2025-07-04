@@ -23,7 +23,7 @@ public interface PostingMapper {
     @Mapping(target = "postId", source = "postId")
     @Mapping(target = "user", source = "userNo") // userNo → User
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "editedAt", expression = "java(java.time.Instant.now())")
+    @Mapping(target = "editedAt", ignore = true)
     @Mapping(target = "isUsed", ignore = true)
     @Mapping(target = "memo", ignore = true)
     @Mapping(target = "isReported", ignore = true)

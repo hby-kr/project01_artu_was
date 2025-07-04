@@ -29,7 +29,7 @@ public class OnedayImageDto {
         private Instant createdAt;
     }
 
-    // 이미지 업데이트
+    // 이미지 수정
     @Getter
     @Setter
     @ToString
@@ -38,8 +38,8 @@ public class OnedayImageDto {
         private Integer onedayId;
         private String imgUrl;
         private Integer imgOrder;
-        private Instant createdAt;
     }
+
 
     // 디테일 이미지 등록
     @Getter
@@ -63,5 +63,15 @@ public class OnedayImageDto {
         private Instant createdAt;
     }
 
+    // 디테일 이미지 수정
+    @Getter
+    @Setter
+    @ToString
+    public static class OnedayDetailImagesUpdateDto {
+        private Integer detailImgId;
+        private Integer onedayId;
+        private String imgUrl;
+        private Integer imgOrder;
+    }
 
 }

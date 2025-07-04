@@ -15,11 +15,11 @@ class PostingCommentsRepositoryTest {
 
     @Test
     void findByPost_PostId() {
-        postingCommentsRepository.findByPost_PostId(1);
+        postingCommentsRepository.findByPostId(1);
     }
 
     @Test
     void findByUser_UserNo() {
-        postingCommentsRepository.findByUser_UserNo(1);
+        postingCommentsRepository.findByUserNo(1);
     }
 }

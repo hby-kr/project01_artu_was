@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface PostingImageRepository extends JpaRepository<PostingImage, Integer> {
     // 게시물 이미지 조회
-    List<PostingImage> findByPost_PostId(Integer postId);
+    List<PostingImage> findByPostId(Integer postId);
 }

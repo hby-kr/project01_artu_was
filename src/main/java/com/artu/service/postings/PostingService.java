@@ -1,12 +1,24 @@
 package com.artu.service.postings;
 
-import org.springframework.transaction.annotation.Transactional;
+import com.artu.dto.posting.PostingDto;
+import com.artu.dto.posting.PostingImageDto;
+import com.artu.entity.postings.PostingImage;
 
-import java.util.Set;
+import java.util.List;
 
-@Transactional
 public interface PostingService {
-//    PostingDto save(PostingDto postingDto);
-//    void delete(Integer postId, Integer userNo);
-//    Set<PostingDto> findByUserNo(Integer userNo);
+    // posting 등록
+    PostingDto.PostingResponseDto save(PostingDto.PostingRequestDto requestDto);
+
+    // posting 삭제
+    PostingDto.PostingResponseDto delete(Integer postId);
+
+    // 사용자 게시물 조회
+    List<PostingDto.PostingResponseDto> findByUser_UserNo(Integer userNo);
+
+    // 게시물 단건 조회
+    PostingDto.PostingResponseDto findByPostId(Integer postId);
+
+    // 게시물 이미지 조회
+     List<PostingImageDto.PostingImageResponseDto> findByPost_PostId(Integer postId);
 }

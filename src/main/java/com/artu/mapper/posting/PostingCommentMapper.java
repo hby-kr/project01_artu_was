@@ -10,42 +10,42 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PostingCommentMapper {
     @Mapping(target = "commentId", ignore = true)
-    @Mapping(target = "post", source = "postId")
-    @Mapping(target = "user", source = "userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "isUsed", constant = "true")
     @Mapping(target = "memo", ignore = true)
     PostingComment toEntity(PostingCommentDto.PostingCommentRequestDto RequestDto);
 
-    @Mapping(target = "post", source = "postId")
-    @Mapping(target = "user", source = "userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     @Mapping(target = "isUsed", ignore = true)
     @Mapping(target = "memo", ignore = true)
     PostingComment toEntity(PostingCommentDto.PostingCommentResponseDto ResponseDto);
 
-    @Mapping(target = "post", source = "postId")
-    @Mapping(target = "user", source = "userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     @Mapping(target = "isUsed", ignore = true)
     @Mapping(target = "memo", ignore = true)
     PostingComment toEntity(PostingCommentDto.PostingCommentUpdateDto UpdateDto);
 
-    @Mapping(target = "postId", source = "post.postId")
-    @Mapping(target = "userNo", source = "user.userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     PostingCommentDto.PostingCommentRequestDto toRequestDto(PostingComment postingCommentEntity);
 
     @Mapping(target = "commentId", source = "commentId")
     @Mapping(target = "contents", source = "contents")
-    @Mapping(target = "postId", source = "post.postId")
-    @Mapping(target = "userNo", source = "user.userNo")
-    @Mapping(target = "userId", source = "user.userId")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
+//    @Mapping(target = "userId", source = "user.userId")
     @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "parentCommentId", source = "parentCommentId")
     PostingCommentDto.PostingCommentResponseDto toResponseDto(PostingComment postingCommentEntity);
 
     @Mapping(target = "commentId", source = "commentId")
     @Mapping(target = "contents", source = "contents")
-    @Mapping(target = "postId", source = "post.postId")
-    @Mapping(target = "userNo", source = "user.userNo")
+    @Mapping(target = "postId", source = "postId")
+    @Mapping(target = "userNo", source = "userNo")
     @Mapping(target = "parentCommentId", source = "parentCommentId")
     @Mapping(target = "createdAt", source = "createdAt")
     PostingCommentDto.PostingCommentUpdateDto toUpdateDto(PostingComment postingCommentEntity);

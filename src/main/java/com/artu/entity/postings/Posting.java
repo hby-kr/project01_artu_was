@@ -34,6 +34,7 @@ public class Posting implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_no", nullable = false)
     private User user;
+    // JPQL, Fetch Join, EntityGraph
 
     @NotNull
     @Lob
